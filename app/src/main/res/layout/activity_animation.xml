@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.apppartner.androidtest.animation.AnimationActivity">
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_app_partner_logo"
+        android:visibility="visible" />
+
+<com.andexert.library.RippleView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    android:layout_marginBottom="14dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:rv_centered="true">
+
+    <Button
+        android:id="@+id/anim_fade_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_mango"
+        android:text="FADE"
+        android:textAlignment="center"
+        android:textColor="@color/white"/>
+
+</com.andexert.library.RippleView>
+
+
+</RelativeLayout>

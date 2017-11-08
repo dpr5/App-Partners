@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.apppartner.androidtest.MainActivity">
+
+
+    <include layout="@layout/my_tool_bar"></include>
+
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_container"
+        android:layout_below="@+id/top_toolbar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_company_photo" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/button_mango"
+            android:onClick="onAnimationClicked"
+            android:text="@string/animation_button"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/button_blue"
+            android:onClick="onChatClicked"
+            android:text="@string/chat_button"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/button_orange"
+            android:onClick="onLoginClicked"
+            android:text="@string/login_button"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_text_size" />
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
