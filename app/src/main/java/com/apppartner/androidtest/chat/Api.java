@@ -16,6 +16,8 @@ public interface Api {
     String Base_URL = "http://dev3.apppartner.com/AppPartnerDeveloperTest/scripts/";
 
     @GET("chat_log.php")
-    Call<List<ChatData>> getChatLog();
+    Call<List<Chat>> getChatLog();
+
+
 
 }

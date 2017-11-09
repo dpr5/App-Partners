@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.apppartner.androidtest.MainActivity;
 import com.apppartner.androidtest.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,13 +50,15 @@ public class ChatActivity extends AppCompatActivity {
     //==============================================================================================
     // Lifecycle Methods
     //==============================================================================================
+    ListView listView;
+    ArrayList<String> aa = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_main);
 
-//        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        //        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 //
 //        chatAdapter = new ChatAdapter();
 //
@@ -83,54 +86,59 @@ public class ChatActivity extends AppCompatActivity {
 //
 //        chatAdapter.setChatLogMessageModelList(tempList);
 
-        final ListView listView = (ListView) findViewById(R.id.myList);
+
 
         // TODO: Make the UI look like it does in the mock-up. Allow for horizontal screen rotation.
 
         // TODO: Retrieve the chat data from http://dev3.apppartner.com/AppPartnerDeveloperTest/scripts/chat_log.php
         // TODO: Parse this chat data from JSON into ChatLogMessageModel and display it.
+//************************************************************************************************************************************
+        // I am disregarding the recycler view for now to get the API call working.
+        // I will implement that after I can make a sucessful call and retrieve data
+//************************************************************************************************************************************
+        listView = (ListView) findViewById(R.id.myList);
 
+        getChat();
+    }
+
+    private void getChat() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.Base_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
 
         Api api = retrofit.create(Api.class);
-        Call<List<ChatData>> call = api.getChatLog();
 
-        call.enqueue(new Callback<List<ChatData>>() {
+        Call<List<Chat>> call = api.getChatLog();
+
+        call.enqueue(new Callback<List<Chat>>() {
             @Override
-            public void onResponse(Call<List<ChatData>> call, Response<List<ChatData>> response) {
-                List<ChatData> chatData = response.body();
+            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+                List<Chat> heroList = response.body();
+                //Creating an String array for the ListView
 
-                String[] names = new String[chatData.size()];
+                String[] heroes = new String[heroList.size()];
 
-                for (int i = 0; i < chatData.size(); i++) {
-                    names[i] = chatData.get(i).getUsername();
+                //looping through all the heroes and inserting the names inside the string array
+                for (int i = 0; i < heroList.size(); i++) {
+                    heroes[i] = heroList.get(i).getUsername();
+
                 }
 
-                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_2, names));
 
-//                for(ChatData d: chatData){
-//                    Log.d("user_id", d.getId());
-//                    Log.d("username", d.getUsername());
-//                    Log.d("avatar_url", d.getAvatar_url());
-//                    //"user_id" : "3", "username" : "Justin LeClair", "avatar_url"
-//                }
+                //displaying the string array into listview
+                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, heroes));
 
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.customlistview, aa);
+//                listView.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<List<ChatData>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<List<Chat>> call, Throwable t) {
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Message", t.getMessage());
             }
         });
-
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }
